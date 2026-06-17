@@ -9,9 +9,8 @@ struct Botao {
     int idacao;
     bool ativo;
 
-    Botao(const sf::Font& font) : idacao(0), ativo(true) {
-        texto.setFont(font);
-    }
+    // Correção: Inicializando explicitamente o sf::Text com a fonte exigida pela SFML 3.0
+    Botao(const sf::Font& font) : texto(font), idacao(0), ativo(true) {}
 
     void desenhar(sf::RenderWindow& window) {
         if (!ativo) return;
