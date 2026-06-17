@@ -9,12 +9,18 @@ struct Botao {
     int idacao;
     bool ativo;
 
-    Botao(const sf::Font& font) : texto(font), idacao(0), ativo(true) {}
+    Botao(const sf::Font& font) : idacao(0), ativo(true) {
+        texto.setFont(font);
+    }
 
     void desenhar(sf::RenderWindow& window) {
         if (!ativo) return;
         window.draw(shape);
         window.draw(texto);
+    }
+
+    bool foiClicado(sf::Vector2f mousePos) const {
+        return ativo && shape.getGlobalBounds().contains(mousePos);
     }
 };
 
