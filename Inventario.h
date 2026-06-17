@@ -3,20 +3,7 @@
 
 #include <vector>
 #include <string>
-
-template <typename T>
-class Inventario {
-private:
-    std::vector<T> itens;
-public:
-    void adicionar(const T& item) {
-        itens.push_back(item);
-    }
-    T& operator[](size_t index) {
-        return itens.at(index);
-    }
-    size_t tamanho() const { return itens.size(); }
-};
+#include <stdexcept>
 
 class ItemComida {
 private:
@@ -26,6 +13,25 @@ public:
     ItemComida(std::wstring n, std::wstring i) : nome(n), icone(i) {}
     std::wstring getNome() const { return nome; }
     std::wstring getIcone() const { return icone; }
+};
+
+template <typename T>
+class Inventario {
+private:
+    std::vector<T> itens;
+public:
+    void adicionar(const T& item) {
+        itens.push_back(item);
+    }
+    
+    T& operator[](size_t index) {
+        if (index >= itens.size()) {
+            throw std::out_of_range("Índice de inventário inválido.");
+        }
+        return itens.at(index);
+    }
+    
+    size_t tamanho() const { return itens.size(); }
 };
 
 #endif
