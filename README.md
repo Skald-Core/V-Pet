@@ -1,7 +1,6 @@
 import os
 
 # Conteúdo detalhado para o README do VPet Retro
-readme_content = """# VPet Retro - Enhanced Edition 🐾
 
 Um simulador de animal de estimação virtual (Virtual Pet) interativo e minimalista desenvolvido em **C++** utilizando a biblioteca gráfica **SFML (Simple and Fast Multimedia Library)**. O projeto adota boas práticas de **Orientação a Objetos (POO)**, herança, polimorfismo e programação genérica (templates).
 
