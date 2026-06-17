@@ -5,7 +5,7 @@
 #include "Inventario.h"
 
 class Mascote {
-protected:
+private:
     std::wstring nome;
     std::wstring especie;
     int idade;
@@ -22,17 +22,19 @@ public:
     Mascote(std::wstring n, std::wstring esp);
     virtual ~Mascote() = default;
 
+    // Getters e Setters com Encapsulamento Garantido
     std::wstring getNome() const { return nome; }
+    std::wstring getEspecie() const { return especie; }
     int getIdade() const { return idade; }
     int getSaciedade() const { return saciedade; }
     int getFelicidade() const { return felicidade; }
     int getSaude() const { return saude; }
     int getEnergia() const { return energia; }
     bool getEstaDormindo() const { return estaDormindo; }
-    
     float getPosX() const { return posX; }
     float getVelocidade() const { return velocidade; }
 
+    // Interfaces Polimórficas Puramente Virtuais
     virtual std::wstring getIconeFeliz() const = 0;
     virtual std::wstring getIconeNeutro() const = 0;
     virtual std::wstring getIconeTriste() const = 0;
@@ -52,6 +54,7 @@ public:
     void brincar(std::wstring& msgLog);
 };
 
+// Subclasses altamente coesas e fáceis de estender
 class Cachorro : public Mascote {
 public:
     Cachorro(std::wstring n) : Mascote(n, L"Cachorro") {}
