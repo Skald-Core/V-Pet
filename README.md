@@ -188,7 +188,7 @@ A lógica de transição de telas foi blindada usando um enumerador fortemente t
 Navegue até a pasta raiz onde estão situados os arquivos fontes e execute:
 
 ```bash
-g++ -std=c++17 main.cpp Mascote.cpp -o vpet -lsfml-graphics -lsfml-window -lsfml-system
+g++ -std=c++17 main.cpp Mascote.cpp -o vpet'.exe -lsfml-graphics -lsfml-window -lsfml-system
 
 ```
 
@@ -197,6 +197,6 @@ g++ -std=c++17 main.cpp Mascote.cpp -o vpet -lsfml-graphics -lsfml-window -lsfml
 Certifique-se de que o arquivo de asset `font.ttf` esteja localizado no mesmo diretório de trabalho do executável gerado.
 
 ```bash
-./vpet
+./vpet.exe
 
 ```
