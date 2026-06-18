@@ -1,8 +1,8 @@
-# 🐾 VPet Retro — Enhanced OOP Edition
+# 🐾 VPet — Enhanced OOP Edition
 
 ## 📖 Sobre o Projeto
 
-**VPet Retro** é um simulador de animal de estimação virtual inspirado nos clássicos dispositivos Tamagotchi da década de 1990. O projeto foi desenvolvido em **C++ moderno**, utilizando a biblioteca gráfica **SFML 3.0+**, com foco na aplicação de conceitos avançados de **Programação Orientada a Objetos (POO)**, arquitetura modular e boas práticas de desenvolvimento de software.
+**VPet** é um simulador de animal de estimação virtual inspirado nos clássicos dispositivos Tamagotchi da década de 1990. O projeto foi desenvolvido em **C++ moderno**, utilizando a biblioteca gráfica **SFML 3.0+**, com foco na aplicação de conceitos avançados de **Programação Orientada a Objetos (POO)**, arquitetura modular e boas práticas de desenvolvimento de software.
 
 O objetivo principal é demonstrar a construção de um sistema interativo completo empregando abstração, encapsulamento, herança, polimorfismo, programação genérica e gerenciamento seguro de memória.
 
@@ -10,7 +10,7 @@ O objetivo principal é demonstrar a construção de um sistema interativo compl
 
 # 🎯 Objetivos do Projeto
 
-O desenvolvimento do VPet Retro foi orientado pelos seguintes princípios:
+O desenvolvimento do VPet foi orientado pelos seguintes princípios:
 
 * Aplicar **encapsulamento rigoroso**, evitando acesso direto aos atributos internos dos objetos.
 * Implementar **polimorfismo dinâmico** por meio de uma hierarquia de classes baseada em abstração.
@@ -26,7 +26,7 @@ O desenvolvimento do VPet Retro foi orientado pelos seguintes princípios:
 O projeto está organizado em módulos independentes que representam responsabilidades específicas dentro da aplicação.
 
 ```text
-📦 VPet-Retro
+📦 VPet
  ┣ 📜 main.cpp
  ┣ 📜 Mascote.h
  ┣ 📜 Mascote.cpp
@@ -403,5 +403,8 @@ Este projeto evidencia domínio dos seguintes tópicos:
 ## 📄 Licença
 
 Projeto desenvolvido para fins acadêmicos e educacionais.
-
 Sinta-se livre para estudar, modificar e expandir a aplicação.
+
+## 🐙 GIT
+
+[GitHub](https://github.com/Skald-Core/V-Pet)
