@@ -1,202 +1,407 @@
-Aqui está uma proposta completa para a página de **Wiki do Projeto** no padrão ideal para submissão académica ou portfólios técnicos de engenharia de software (Wiki Projetos TF).
+# 🐾 VPet Retro — Enhanced OOP Edition
 
-Esta estrutura está totalmente alinhada com os conceitos de **POO Avançada**, **C++ Moderno** e as correções de arquitetura que garantem a completude do seu ecossistema **VPet Retro**.
+## 📖 Sobre o Projeto
 
----
+**VPet Retro** é um simulador de animal de estimação virtual inspirado nos clássicos dispositivos Tamagotchi da década de 1990. O projeto foi desenvolvido em **C++ moderno**, utilizando a biblioteca gráfica **SFML 3.0+**, com foco na aplicação de conceitos avançados de **Programação Orientada a Objetos (POO)**, arquitetura modular e boas práticas de desenvolvimento de software.
 
-# 📑 Wiki / README: VPet Retro (POO Enhanced Edition)
-
-## 🎯 1. Visão Geral do Projeto
-
-O **VPet Retro** é um simulador interativo de animal de estimação virtual (*Virtual Pet*) inspirado nos clássicos chaveiros Tamagotchi dos anos 90. O software foi desenvolvido em **C++** utilizando a biblioteca gráfica **SFML (Simple and Fast Multimedia Library) 3.0+**, aplicando conceitos rigorosos de **Programação Orientada a Objetos (POO)**, padrões de design para interfaces gráficas e boas práticas de arquitetura de software limpa.
-
-### Objetivos do Desenvolvimento
-
-* **Encapsulamento Estrito:** Eliminar qualquer exposição direta de atributos a escopos externos, centralizando mutações de estado em contratos de métodos controlados.
-* **Polimorfismo Dinâmico:** Garantir que o motor principal do jogo manipule os animais de forma agnóstica através de uma classe base abstrata.
-* **Segurança de Memória (Modern C++):** Erradicação de ponteiros brutos (`raw pointers`) e vazamentos de memória através do uso de ponteiros inteligentes (`std::unique_ptr`).
-* **Programação Genérica:** Criação de estruturas de inventário reutilizáveis baseadas em *Templates*.
+O objetivo principal é demonstrar a construção de um sistema interativo completo empregando abstração, encapsulamento, herança, polimorfismo, programação genérica e gerenciamento seguro de memória.
 
 ---
 
-## 🏗️ 2. Arquitetura do Sistema e Conceitos de POO
+# 🎯 Objetivos do Projeto
 
-O projeto é estruturado de forma modular e desacoplada em cinco componentes principais:
+O desenvolvimento do VPet Retro foi orientado pelos seguintes princípios:
 
-```
+* Aplicar **encapsulamento rigoroso**, evitando acesso direto aos atributos internos dos objetos.
+* Implementar **polimorfismo dinâmico** por meio de uma hierarquia de classes baseada em abstração.
+* Utilizar recursos de **C++ Moderno**, eliminando vazamentos de memória através de `std::unique_ptr`.
+* Construir componentes reutilizáveis utilizando **templates**.
+* Organizar o sistema em módulos independentes e de fácil manutenção.
+* Desenvolver uma interface gráfica simples e intuitiva utilizando SFML.
+
+---
+
+# 🏗️ Arquitetura do Sistema
+
+O projeto está organizado em módulos independentes que representam responsabilidades específicas dentro da aplicação.
+
+```text
 📦 VPet-Retro
- ┣ 📜 main.cpp          <- Orquestrador do Loop, Máquina de Estados e Renderização
- ┣ 📜 Mascote.h/.cpp    <- Abstração Base (Mascote) e Especializações Polimórficas
- ┣ 📜 Inventario.h      <- Estrutura Genérica de Dados (Template) para Itens
- ┣ 📜 Botao.h           <- Componente Reutilizável de UI Encapsulado
- ┗ 📜 font.ttf          <- Assets de Renderização de Tipografia
-
+ ┣ 📜 main.cpp
+ ┣ 📜 Mascote.h
+ ┣ 📜 Mascote.cpp
+ ┣ 📜 Inventario.h
+ ┣ 📜 Botao.h
+ ┗ 📜 font.ttf
 ```
 
-### 🧬 Mapeamento de Conceitos POO Aplicados
+### Responsabilidades dos Módulos
 
-#### A. Abstração e Classes Abstratas
+| Arquivo          | Responsabilidade                                        |
+| ---------------- | ------------------------------------------------------- |
+| `main.cpp`       | Loop principal, gerenciamento de estados e renderização |
+| `Mascote.h/.cpp` | Modelo de domínio dos mascotes e especializações        |
+| `Inventario.h`   | Estrutura genérica para gerenciamento de itens          |
+| `Botao.h`        | Componente reutilizável da interface gráfica            |
+| `font.ttf`       | Recurso tipográfico da aplicação                        |
 
-A classe `Mascote` atua como um contrato abstrato. Ela não pode ser instanciada diretamente por conter funções virtuais puras (`= 0`). Ela define o ciclo de vida genérico aplicável a qualquer espécie de criatura virtual:
+---
+
+# 🧬 Conceitos de Programação Orientada a Objetos
+
+## 1. Abstração
+
+A classe `Mascote` representa uma abstração genérica de qualquer animal virtual existente no sistema.
+
+Como cada espécie possui características próprias, a classe contém métodos virtuais puros que obrigam as subclasses a fornecerem implementações específicas.
 
 ```cpp
 virtual std::wstring getIconeFeliz() const = 0;
 virtual std::wstring getComidaCerta() const = 0;
-
 ```
 
-#### B. Encapsulamento de Nível Acadêmico
-
-Ao contrário de modelagens frágeis que utilizam modificadores `protected` ou `public` para atributos de estado, todos os dados do mascote (como `saciedade`, `felicidade`, `saude` e `energia`) são declarados estritamente como `private`.
-
-* As subclasses e classes externas comunicam-se apenas através de getters públicos const-safe (`int getSaude() const`) e métodos de comportamento coordenado (ex: `alimentar(...)`).
-
-#### C. Herança e Polimorfismo Rebatido
-
-As classes `Cachorro`, `Gato` e `Coelho` herdam os atributos e comportamentos de `Mascote`. O polimorfismo é executado em tempo de execução (`Runtime Polymorphism`) pelo loop principal. Quando o orquestrador chama `pet->getArtAtual()`, o comportamento dinâmico é resolvido com base na subclasse real instanciada.
-
-#### D. Programação Genérica via Templates
-
-A classe `Inventario<T>` implementa um container genérico. No contexto atual do projeto, ela armazena instâncias de `ItemComida`, mas sua estrutura parametrizada permite reutilização futura imediata para gerenciar outros tipos de objetos (como `ItemBrinquedo` ou `Medicamento`), sem alterar uma única linha de código interno do container.
+Dessa forma, a classe não pode ser instanciada diretamente.
 
 ---
 
-## 📊 3. Diagrama de Classes UML (Concordância de Implementação)
+## 2. Encapsulamento
 
-O diagrama abaixo reflete a hierarquia de dependência e herança exata encontrada no código fonte atualizado:
-
-```
-    +--------------------------------------+
-    |          Inventario<T>               |
-    +--------------------------------------+
-    | - itens: std::vector<T>              |
-    +--------------------------------------+
-    | + adicionar(item: const T&): void    |
-    | + operator[](index: size_t): T&      |
-    | + tamanho(): size_t                  |
-    +--------------------------------------+
-                       | (Armazena)
-                       v
-    +--------------------------------------+            +------------------------+
-    |             ItemComida               |            |         Botao          |
-    +--------------------------------------+            +------------------------+
-    | - nome: std::wstring                 |            | + shape: RectangleShape|
-    | - icone: std::wstring                |            | + texto: sf::Text      |
-    +--------------------------------------+            | + idacao: int          |
-    | + getNome(): std::wstring            |            | + ativo: bool          |
-    | + getIcone(): std::wstring           |            +------------------------+
-    +--------------------------------------+            | + Botao(font: Font)    |
-                       ^                                | + desenhar(win): void  |
-                       | (Passado como Parâmetro)       | + foiClicado(p): bool  |
-                       |                                +------------------------+
-    +--------------------------------------+
-    |               Mascote                | <--- [ Abstrata ]
-    +--------------------------------------+
-    | - nome, especie: std::wstring        |
-    | - idade, saciedade, saude: int       |
-    | - felicidade, energia: int           |
-    | - posX, velocidade: float            |
-    | - estaDormindo: bool                 |
-    +--------------------------------------+
-    | + Mascote(n, esp)                    |
-    | + getters de atributos...            |
-    | + alternarSono(): void               |
-    | + atualizarMovimento(): void         |
-    | + alimentar(comida, log): void       |
-    | + brincar(log): void                 |
-    | + /getIconeFeliz()/: wstring = 0     |
-    | + /getComidaCerta()/: wstring = 0    |
-    +--------------------------------------+
-         ^             ^             ^
-         | (Herança)   | (Herança)   | (Herança)
-  +-----------+  +-----------+  +-----------+
-  | Cachorro  |  |   Gato    |  |  Coelho   |
-  +-----------+  +-----------+  +-----------+
-
-```
-
----
-
-## 🎮 4. Regras de Negócio e Ciclo de Vida
-
-O ciclo de simulação obedece a regras de transição estritas baseadas nas ações do usuário coletadas pelo painel UI.
-
-```
-       [ Seleção de Espécie ] 
-                 │
-                 ▼
-       [ Digitação do Nome ] 
-                 │
-                 ▼
- ┌────────►[ Execução do Jogo ]◄─────────┐
- │               │                       │
- │               ├───────────────────────┼──────────────────────┐
- │               ▼                       ▼                      ▼
- │         (Ação: Brincar)      (Ação: Alimentar)        (Ação: Dormir)
- │         - Gasta Energia       - Alimento Certo:        - Restaura Energia
- │         - Aumenta Felicidade    + Fome / + Felicidade  - Reduz Fome (Acorda)
- │         - Se exausto:         - Alimento Errado:       - Avança Idade (+1 Ano)
- │           Perde Saúde (-1)      Passa mal (-1 HP)            │
- │               │                       │                      │
- └───────────────┴───────────────────────┴──────────────────────┘
-                 │
-                 ▼ (Verificação de Condição de Fim)
-   ┌─────────────────────────────┼──────────────────────────────┐
-   ▼                             ▼                              ▼
-[ Saúde <= 0 ]            [ Felicidade <= 0 ]             [ Idade >= 5 ]
-  Estado: Faleceu           Estado: Fugiu de Casa           Estado: Sucesso! vPet
- (Lápide R.I.P)             (Abandono)                      Cresceu Saudável
-
-```
-
----
-
-## 🛠️ 5. Qualidade do Código e Decisões Modernas de C++
-
-### Gerenciamento Seguro de Memória (`std::unique_ptr`)
-
-Nas abordagens clássicas de C++, a troca de mascotes exigiria alocações brutas com `new` e desalocações manuais com `delete`, propensas a vazamentos caso uma exceção fosse lançada. Este projeto mitiga completamente esses problemas adotando semântica de movimentação de escopo seguro:
+Todos os atributos internos do mascote são declarados como `private`.
 
 ```cpp
-// Instanciação polimórfica auto-gerenciada
-std::unique_ptr<Mascote> pet = nullptr;
-if (especieEscolhida == 1) pet = std::make_unique<Cachorro>(nomeDigitado);
-
+private:
+    int saude;
+    int felicidade;
+    int energia;
+    int saciedade;
 ```
 
-Ao sair do loop ou fechar a janela, o destrutor de `std::unique_ptr` desaloca a memória na Heap de forma totalmente automática.
+O acesso ao estado interno ocorre exclusivamente por meio de métodos públicos controlados.
 
-### Componentização de Interface Gráfica
+```cpp
+int getSaude() const;
+void alimentar(...);
+void brincar(...);
+```
 
-Para evitar que a rotina principal `main.cpp` ficasse poluída com checagens repetitivas de geometria e posicionamento de tela, a lógica de interação do usuário foi isolada dentro do tipo `Botao`. O método `foiClicado(sf::Vector2f)` encapsula testes de colisão e estados de ativação em um único ponto reutilizável.
-
-### Tipagem Forte com Máquinas de Estado (`enum class`)
-
-A lógica de transição de telas foi blindada usando um enumerador fortemente tipado (`enum class EstadoJogo`). Isso remove totalmente os chamados "números mágicos" (`estado == 1`, `estado == 2`), evitando erros de atribuição indesejada de tipos inteiros puros em tempo de compilação.
+Essa abordagem preserva a integridade dos dados e evita alterações indevidas por código externo.
 
 ---
 
-## 🚀 6. Como Compilar e Executar
+## 3. Herança
 
-### Pré-requisitos
+As espécies concretas derivam da classe base `Mascote`.
 
-* Compilador GCC/G++ configurado com suporte para **C++17** ou superior.
-* Biblioteca **SFML 3.0+** devidamente instalada no sistema (pastas `/include` e `/lib` mapeadas nas variáveis de ambiente).
-
-### Comando de Compilação (Via Terminal/GCC)
-
-Navegue até a pasta raiz onde estão situados os arquivos fontes e execute:
-
-```bash
-g++ -std=c++17 main.cpp Mascote.cpp -o vpet'.exe -lsfml-graphics -lsfml-window -lsfml-system
-
+```cpp
+class Cachorro : public Mascote
+class Gato : public Mascote
+class Coelho : public Mascote
 ```
 
-### Execução
+Cada subclasse herda os comportamentos comuns e especializa apenas os aspectos específicos de sua espécie.
 
-Certifique-se de que o arquivo de asset `font.ttf` esteja localizado no mesmo diretório de trabalho do executável gerado.
+---
+
+## 4. Polimorfismo
+
+O sistema manipula os mascotes através de referências para a classe base.
+
+```cpp
+std::unique_ptr<Mascote> pet;
+```
+
+Durante a execução, chamadas como:
+
+```cpp
+pet->getArtAtual();
+```
+
+são resolvidas dinamicamente conforme o tipo real do objeto instanciado.
+
+Esse mecanismo permite adicionar novas espécies sem alterar o código principal do jogo.
+
+---
+
+## 5. Programação Genérica (Templates)
+
+O inventário foi implementado utilizando templates.
+
+```cpp
+template<typename T>
+class Inventario
+```
+
+Atualmente ele armazena objetos do tipo `ItemComida`, porém pode ser reutilizado para qualquer outro tipo sem modificações internas.
+
+Exemplos futuros:
+
+* `Inventario<ItemBrinquedo>`
+* `Inventario<Medicamento>`
+* `Inventario<Acessorio>`
+
+---
+
+# 📊 Diagrama UML Simplificado
+
+```text
+                    +-------------------+
+                    |   Inventario<T>   |
+                    +-------------------+
+                    | vector<T> itens   |
+                    +-------------------+
+                              |
+                              |
+                              ▼
+                    +-------------------+
+                    |    ItemComida     |
+                    +-------------------+
+                    | nome              |
+                    | icone             |
+                    +-------------------+
+
++---------------------------------------------------+
+|                     Mascote                       |
++---------------------------------------------------+
+| nome, especie                                     |
+| idade, saude, felicidade                          |
+| energia, saciedade                                |
+| posX, velocidade                                  |
+| estaDormindo                                      |
++---------------------------------------------------+
+| alimentar()                                       |
+| brincar()                                         |
+| atualizarMovimento()                              |
+| alternarSono()                                    |
+| getIconeFeliz() = 0                               |
+| getComidaCerta() = 0                              |
++---------------------------------------------------+
+           ▲                 ▲                 ▲
+           │                 │                 │
+    +-----------+     +-----------+     +-----------+
+    | Cachorro  |     |   Gato    |     |  Coelho   |
+    +-----------+     +-----------+     +-----------+
+
+                    +-------------------+
+                    |       Botao       |
+                    +-------------------+
+                    | shape             |
+                    | texto             |
+                    | ativo             |
+                    +-------------------+
+                    | desenhar()        |
+                    | foiClicado()      |
+                    +-------------------+
+```
+
+---
+
+# 🎮 Regras de Negócio
+
+O ciclo de vida do mascote é controlado pelas ações realizadas pelo usuário.
+
+## Alimentar
+
+### Alimento correto
+
+* Aumenta a saciedade
+* Aumenta a felicidade
+
+### Alimento incorreto
+
+* Reduz a saúde do mascote
+
+---
+
+## Brincar
+
+* Aumenta a felicidade
+* Consome energia
+
+Caso a energia esteja muito baixa:
+
+* O mascote perde saúde por exaustão
+
+---
+
+## Dormir
+
+* Recupera energia
+* Avança o tempo de vida do mascote
+* Pode reduzir a fome ao acordar
+
+---
+
+# 🔄 Fluxo de Execução
+
+```text
+Escolha da Espécie
+          │
+          ▼
+   Digitação do Nome
+          │
+          ▼
+      Início do Jogo
+          │
+          ├── Alimentar
+          ├── Brincar
+          └── Dormir
+          │
+          ▼
+ Verificação das Condições Finais
+```
+
+---
+
+## Condições de Encerramento
+
+### ☠️ Faleceu
+
+```text
+Saúde <= 0
+```
+
+O mascote morre devido ao estado crítico.
+
+---
+
+### 🚪 Fugiu de Casa
+
+```text
+Felicidade <= 0
+```
+
+O mascote abandona o jogador.
+
+---
+
+### 🏆 Sucesso
+
+```text
+Idade >= 5
+```
+
+O mascote alcança a fase adulta de forma saudável.
+
+---
+
+# 🛠️ Boas Práticas e Recursos Modernos de C++
+
+## Gerenciamento Seguro de Memória
+
+O projeto utiliza ponteiros inteligentes para evitar vazamentos de memória.
+
+```cpp
+std::unique_ptr<Mascote> pet;
+
+pet = std::make_unique<Cachorro>(nomeDigitado);
+```
+
+A desalocação ocorre automaticamente quando o objeto sai de escopo.
+
+---
+
+## Componentização da Interface
+
+A lógica de interação gráfica foi encapsulada na classe `Botao`.
+
+```cpp
+bool foiClicado(sf::Vector2f posicao);
+```
+
+Isso reduz o acoplamento entre interface e lógica de negócio.
+
+---
+
+## Máquina de Estados
+
+As telas da aplicação são controladas por um enumerador fortemente tipado.
+
+```cpp
+enum class EstadoJogo
+{
+    Menu,
+    EscolhaMascote,
+    Nomeacao,
+    Jogando,
+    Finalizado
+};
+```
+
+Benefícios:
+
+* Eliminação de números mágicos
+* Maior legibilidade
+* Segurança de tipos em tempo de compilação
+
+---
+
+# 🚀 Compilação
+
+## Pré-requisitos
+
+* GCC/G++ com suporte a C++17 ou superior
+* SFML 3.0+ instalada e configurada
+* Arquivo `font.ttf` disponível no diretório do executável
+
+---
+
+## Compilando
 
 ```bash
-./vpet.exe
-
+g++ -std=c++17 main.cpp Mascote.cpp -o vpet.exe \
+-lsfml-graphics \
+-lsfml-window \
+-lsfml-system
 ```
+
+---
+
+## Executando
+
+Windows:
+
+```bash
+vpet.exe
+```
+
+Linux:
+
+```bash
+./vpet
+```
+
+---
+
+# 📚 Tecnologias Utilizadas
+
+* C++17
+* SFML 3.0+
+* STL (Standard Template Library)
+* Smart Pointers (`std::unique_ptr`)
+* Templates
+* Programação Orientada a Objetos
+
+---
+
+# 👨‍💻 Competências Demonstradas
+
+Este projeto evidencia domínio dos seguintes tópicos:
+
+* Modelagem Orientada a Objetos
+* Encapsulamento
+* Herança
+* Polimorfismo
+* Classes Abstratas
+* Templates
+* Gerenciamento de Memória em C++ Moderno
+* Arquitetura Modular
+* Desenvolvimento de Interfaces com SFML
+* Organização de Projetos de Software
+
+---
+
+## 📄 Licença
+
+Projeto desenvolvido para fins acadêmicos e educacionais.
+
+Sinta-se livre para estudar, modificar e expandir a aplicação.
