@@ -348,10 +348,7 @@ Benefícios:
 ## Compilando
 
 ```bash
-g++ -std=c++17 main.cpp Mascote.cpp -o vpet.exe \
--lsfml-graphics \
--lsfml-window \
--lsfml-system
+g++ Implementacao/main.cpp Implementacao/Mascote.cpp -I Cabecalho -o vpet_gui.exe -lsfml-graphics -lsfml-window -lsfml-system
 ```
 
 ---
