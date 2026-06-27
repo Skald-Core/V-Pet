@@ -85,7 +85,7 @@ void desenharBarra(sf::RenderWindow& window, const sf::Font& font, const std::ws
 
 int main() {
     srand(static_cast<unsigned int>(time(0)));
-    sf::RenderWindow window(sf::VideoMode({600, 540}), "VPet Retro - POO Master Edition");
+    sf::RenderWindow window(sf::VideoMode({600, 540}), "VPet");
     window.setFramerateLimit(60);
 
     sf::Font font;
