@@ -1,4 +1,4 @@
-# 🐾 VPet — Enhanced OOP Edition
+# 🐾 VPet
 
 ## 📖 Sobre o Projeto
 
