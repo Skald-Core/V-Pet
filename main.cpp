@@ -4,13 +4,12 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <memory>   // Necessário para std::unique_ptr e std::make_unique
+#include <memory> 
 
 #include "Inventario.h"
 #include "Mascote.h"
 #include "Botao.h"
 
-// Enum strongly typed para melhor legibilidade da máquina de estados do jogo
 enum class EstadoJogo {
     SelecaoEspecie,
     DigitandoNome,
@@ -113,7 +112,7 @@ int main() {
     EstadoJogo estadoJogo = EstadoJogo::SelecaoEspecie;
     
     int especieEscolhida = 0; 
-    std::unique_ptr<Mascote> pet = nullptr; // Modern C++: Gerenciamento automático de memória
+    std::unique_ptr<Mascote> pet = nullptr;
     
     std::wstring logTexto = L"Escolha uma especie para comecar.";
     bool subMenuAlimentar = false;
@@ -320,6 +319,5 @@ int main() {
         window.display();
     }
 
-    // Não há mais necessidade de "delete pet;", o smart pointer lida com isso de forma totalmente segura.
     return 0;
 }
